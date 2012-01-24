@@ -15,11 +15,13 @@ class AuthenticationFailureHandler implements AuthenticationFailureHandlerInterf
 {
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        header('Content-Type: application/json');
-
-        die(json_encode(array(
+        $response = new Response(json_encode(array(
             'success'       => false,
-            'error'         => 'Usuario o Contraseña inválidos.'
+            'msg'           => 'Usuario o Contraseña inválidos.'
         )));
+
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
     }
 }
